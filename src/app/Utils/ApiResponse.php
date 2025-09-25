@@ -8,12 +8,12 @@ class ApiResponse
 {
     public static function success($data = null, int $status = 200): JsonResponse
     {
-        return self::getJsonResponse($data, $status);
+        return self::getJsonResponse($data, $status, true);
     }
 
     public static function error($data = null, int $status = 400): JsonResponse
     {
-        return self::getJsonResponse($data, $status);
+        return self::getJsonResponse($data, $status, false);
     }
 
     public static function created($data = null): JsonResponse
@@ -26,10 +26,10 @@ class ApiResponse
      * @param int $status
      * @return JsonResponse
      */
-    public static function getJsonResponse(mixed $data, int $status): JsonResponse
+    public static function getJsonResponse(mixed $data, int $status, bool $isSuccess): JsonResponse
     {
         return response()->json([
-            'success' => true,
+            'success' => $isSuccess,
             'data' => $data,
         ], $status);
     }

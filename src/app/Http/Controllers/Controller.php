@@ -179,6 +179,59 @@ use OpenApi\Annotations as OA;
  *  )
  *
  * @OA\Schema(
+ *      schema="Organization",
+ *      type="object",
+ *      @OA\Property(property="id", type="integer", example=1),
+ *      @OA\Property(property="name", type="string", example="Название организации"),
+ *      @OA\Property(
+ *          property="phones",
+ *          type="array",
+ *          @OA\Items(type="string", example="8012421412")
+ *      ),
+ *      @OA\Property(property="building_id", type="integer", example=1),
+ *      @OA\Property(property="created_at", type="string", format="date-time"),
+ *      @OA\Property(property="updated_at", type="string", format="date-time")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="OrganizationCreate",
+ *      type="object",
+ *      required={"name"},
+ *      @OA\Property(property="name", type="string", example="Новая организация")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="OrganizationUpdate",
+ *      type="object",
+ *      @OA\Property(property="name", type="string", example="Обновленное название организации")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="OrganizationActivity",
+ *      type="object",
+ *      @OA\Property(property="id", type="integer", example=1),
+ *      @OA\Property(property="organization_id", type="integer", example=1),
+ *      @OA\Property(property="activity_id", type="integer", example=1),
+ *      @OA\Property(property="created_at", type="string", format="date-time"),
+ *      @OA\Property(property="updated_at", type="string", format="date-time")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="OrganizationActivityCreate",
+ *      type="object",
+ *      required={"organization_id", "activity_id"},
+ *      @OA\Property(property="organization_id", type="integer", example=1),
+ *      @OA\Property(property="activity_id", type="integer", example=1)
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="OrganizationActivityUpdate",
+ *      type="object",
+ *      @OA\Property(property="organization_id", type="integer", example=1),
+ *      @OA\Property(property="activity_id", type="integer", example=2)
+ *  )
+ *
+ * @OA\Schema(
  *      schema="PaginationMeta",
  *      type="object",
  *      @OA\Property(property="current_page", type="integer", example=1),
