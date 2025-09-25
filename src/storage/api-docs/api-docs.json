@@ -11,7 +11,7 @@
                     "Activity Categories"
                 ],
                 "summary": "Получить список категорий",
-                "operationId": "5603222c688c8c4901ca5117344b6eee",
+                "operationId": "512c2fe8f802987531af96317a637536",
                 "parameters": [
                     {
                         "name": "page",
@@ -29,8 +29,8 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "default": 15,
-                            "maximum": 100,
+                            "default": 20,
+                            "maximum": 1000,
                             "minimum": 1
                         }
                     }
@@ -51,6 +51,12 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/ActivityCategory"
                                             }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/PaginationMeta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/PaginationLinks"
                                         }
                                     },
                                     "type": "object"
@@ -65,7 +71,7 @@
                     "Activity Categories"
                 ],
                 "summary": "Обновить категорию",
-                "operationId": "99c373c14e46ca5a8a355e8dea86e980",
+                "operationId": "9ee09f6951b7187ea96c504410bbf434",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -129,7 +135,7 @@
                     "Activity Categories"
                 ],
                 "summary": "Создать категорию",
-                "operationId": "058174b4d87541d0c7d96d50b219925c",
+                "operationId": "10e707059fd706fabc4971bc07621cc7",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -179,7 +185,7 @@
                     "Activity Categories"
                 ],
                 "summary": "Получить категорию по ID",
-                "operationId": "e9ab7b30577d5d1ca0d60cade8d5d631",
+                "operationId": "78fbc47a0cc8b0659a8691217779e45c",
                 "parameters": [
                     {
                         "name": "category",
@@ -220,7 +226,7 @@
                     "Activity Categories"
                 ],
                 "summary": "Удалить категорию",
-                "operationId": "1150773bfc208feb59b29027b7bf98e5",
+                "operationId": "d925cbd48645cfb541fe23f11b5742fc",
                 "parameters": [
                     {
                         "name": "category",
@@ -264,7 +270,7 @@
                 "tags": [
                     "Activities"
                 ],
-                "summary": "Получить список активностей",
+                "summary": "Получить список видов деятельности",
                 "operationId": "4da05e6d3129851aef11206ccfbec944",
                 "parameters": [
                     {
@@ -283,8 +289,8 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "default": 15,
-                            "maximum": 100,
+                            "default": 20,
+                            "maximum": 1000,
                             "minimum": 1
                         }
                     },
@@ -313,6 +319,12 @@
                                             "items": {
                                                 "$ref": "#/components/schemas/Activity"
                                             }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/PaginationMeta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/PaginationLinks"
                                         }
                                     },
                                     "type": "object"
@@ -326,7 +338,7 @@
                 "tags": [
                     "Activities"
                 ],
-                "summary": "Обновить активность",
+                "summary": "Обновить вид деятельности",
                 "operationId": "25f6706e2cdc65153070fcdc94692d28",
                 "requestBody": {
                     "required": true,
@@ -376,7 +388,7 @@
                         }
                     },
                     "404": {
-                        "description": "Активность не найдена"
+                        "description": "Вид деятельности не найден"
                     },
                     "422": {
                         "description": "Ошибка валидации",
@@ -394,7 +406,7 @@
                 "tags": [
                     "Activities"
                 ],
-                "summary": "Создать активность",
+                "summary": "Добавить вид деятельности",
                 "operationId": "9bf995f76f0b053d3eabe89cbfdf9543",
                 "requestBody": {
                     "required": true,
@@ -408,7 +420,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Активность создана",
+                        "description": "Вид деятельности добавлен",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -444,7 +456,7 @@
                 "tags": [
                     "Activities"
                 ],
-                "summary": "Получить активность по ID",
+                "summary": "Получить вид деятельности по ID",
                 "operationId": "b852d08d4e2bd00c13bc812159243eae",
                 "parameters": [
                     {
@@ -486,7 +498,7 @@
                                             "type": "boolean",
                                             "example": false
                                         },
-                                        "data": {
+                                        "message": {
                                             "type": "string",
                                             "example": "Activity not found"
                                         }
@@ -502,13 +514,13 @@
                 "tags": [
                     "Activities"
                 ],
-                "summary": "Удалить активность",
+                "summary": "Удалить вид деятельности",
                 "operationId": "46de8396d56af6ef25b158743df408c3",
                 "parameters": [
                     {
                         "name": "activity",
                         "in": "path",
-                        "description": "ID активности",
+                        "description": "ID вида деятельности",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -517,10 +529,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Активность успешно удалена"
+                        "description": "Вид деятельности успешно удален"
                     },
                     "404": {
-                        "description": "Активность не найдена",
+                        "description": "Вид деятельности не найден",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -538,6 +550,248 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/buildings": {
+            "get": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Получить список зданий",
+                "operationId": "704d1f7897ed7a3b8d29dacea66823ad",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 20,
+                            "maximum": 1000,
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Building"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/PaginationMeta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/PaginationLinks"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Создать новое здание",
+                "operationId": "c8f8399919e01b1e4e2e2f6a9f1f5107",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BuildingCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Здание создано",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Building"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/buildings/{building}": {
+            "get": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Получить здание по ID",
+                "operationId": "e96dddf69feb8b2f20edde85d7850827",
+                "parameters": [
+                    {
+                        "name": "building",
+                        "in": "path",
+                        "description": "ID здания",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Building"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Здание не найдено"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Обновить здание",
+                "operationId": "e493ff77b33d03a5021738d3a2ef197d",
+                "parameters": [
+                    {
+                        "name": "building",
+                        "in": "path",
+                        "description": "ID здания",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BuildingUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Здание обновлено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Building"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Здание не найдено"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Buildings"
+                ],
+                "summary": "Удалить здание",
+                "operationId": "f613ff587f6f65c0db66fdd2d62670a3",
+                "parameters": [
+                    {
+                        "name": "building",
+                        "in": "path",
+                        "description": "ID здания",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Здание удалено"
+                    },
+                    "404": {
+                        "description": "Здание не найдено"
                     }
                 }
             }
@@ -650,6 +904,175 @@
                 },
                 "type": "object"
             },
+            "Building": {
+                "title": "Building",
+                "description": "Модель здания/строения",
+                "required": [
+                    "description",
+                    "address",
+                    "longitude",
+                    "latitude"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID здания",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "description": {
+                        "description": "Описание здания",
+                        "type": "string",
+                        "example": "Офисное здание бизнес-центра"
+                    },
+                    "address": {
+                        "description": "Адрес здания",
+                        "type": "string",
+                        "example": "ул. Примерная, д. 123"
+                    },
+                    "longitude": {
+                        "description": "Долгота",
+                        "type": "number",
+                        "format": "float",
+                        "example": 55.751244
+                    },
+                    "latitude": {
+                        "description": "Широта",
+                        "type": "number",
+                        "format": "float",
+                        "example": 37.618423
+                    },
+                    "created_at": {
+                        "description": "Дата создания",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Дата обновления",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "BuildingCreate": {
+                "title": "Building Create",
+                "description": "Данные для создания здания",
+                "required": [
+                    "description",
+                    "address",
+                    "longitude",
+                    "latitude"
+                ],
+                "properties": {
+                    "description": {
+                        "description": "Описание здания",
+                        "type": "string",
+                        "example": "Офисное здание бизнес-центра"
+                    },
+                    "address": {
+                        "description": "Адрес здания",
+                        "type": "string",
+                        "example": "ул. Примерная, д. 123"
+                    },
+                    "longitude": {
+                        "description": "Долгота",
+                        "type": "number",
+                        "format": "float",
+                        "example": 55.751244
+                    },
+                    "latitude": {
+                        "description": "Широта",
+                        "type": "number",
+                        "format": "float",
+                        "example": 37.618423
+                    }
+                },
+                "type": "object"
+            },
+            "BuildingUpdate": {
+                "title": "Building Update",
+                "description": "Данные для обновления здания",
+                "properties": {
+                    "description": {
+                        "description": "Описание здания",
+                        "type": "string",
+                        "example": "Обновленное описание здания"
+                    },
+                    "address": {
+                        "description": "Адрес здания",
+                        "type": "string",
+                        "example": "ул. Обновленная, д. 456"
+                    },
+                    "longitude": {
+                        "description": "Долгота",
+                        "type": "number",
+                        "format": "float",
+                        "example": 55.755826
+                    },
+                    "latitude": {
+                        "description": "Широта",
+                        "type": "number",
+                        "format": "float",
+                        "example": 37.6173
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMeta": {
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "from": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "http://localhost/api/buildings"
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "to": {
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": 200
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationLinks": {
+                "properties": {
+                    "first": {
+                        "type": "string",
+                        "example": "http://localhost/api/buildings?page=1"
+                    },
+                    "last": {
+                        "type": "string",
+                        "example": "http://localhost/api/buildings?page=10"
+                    },
+                    "prev": {
+                        "type": "string",
+                        "example": "http://localhost/api/buildings?page=1"
+                    },
+                    "next": {
+                        "type": "string",
+                        "example": "http://localhost/api/buildings?page=2"
+                    }
+                },
+                "type": "object"
+            },
             "ValidationError": {
                 "properties": {
                     "success": {
@@ -686,6 +1109,10 @@
         {
             "name": "Activities",
             "description": "Activities"
+        },
+        {
+            "name": "Buildings",
+            "description": "Buildings"
         }
     ]
 }

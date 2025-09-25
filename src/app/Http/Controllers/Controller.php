@@ -59,6 +59,147 @@ use OpenApi\Annotations as OA;
  * )
  *
  * @OA\Schema(
+ *      schema="Building",
+ *      type="object",
+ *      title="Building",
+ *      description="Модель здания/строения",
+ *      required={"description", "address", "longitude", "latitude"},
+ *      @OA\Property(
+ *          property="id",
+ *          type="integer",
+ *          format="int64",
+ *          description="ID здания",
+ *          example=1
+ *      ),
+ *      @OA\Property(
+ *          property="description",
+ *          type="string",
+ *          description="Описание здания",
+ *          example="Офисное здание бизнес-центра"
+ *      ),
+ *      @OA\Property(
+ *          property="address",
+ *          type="string",
+ *          description="Адрес здания",
+ *          example="ул. Примерная, д. 123"
+ *      ),
+ *      @OA\Property(
+ *          property="longitude",
+ *          type="number",
+ *          format="float",
+ *          description="Долгота",
+ *          example=55.751244
+ *      ),
+ *      @OA\Property(
+ *          property="latitude",
+ *          type="number",
+ *          format="float",
+ *          description="Широта",
+ *          example=37.618423
+ *      ),
+ *      @OA\Property(
+ *          property="created_at",
+ *          type="string",
+ *          format="date-time",
+ *          description="Дата создания"
+ *      ),
+ *      @OA\Property(
+ *          property="updated_at",
+ *          type="string",
+ *          format="date-time",
+ *          description="Дата обновления"
+ *      )
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="BuildingCreate",
+ *      type="object",
+ *      title="Building Create",
+ *      description="Данные для создания здания",
+ *      required={"description", "address", "longitude", "latitude"},
+ *      @OA\Property(
+ *          property="description",
+ *          type="string",
+ *          description="Описание здания",
+ *          example="Офисное здание бизнес-центра"
+ *      ),
+ *      @OA\Property(
+ *          property="address",
+ *          type="string",
+ *          description="Адрес здания",
+ *          example="ул. Примерная, д. 123"
+ *      ),
+ *      @OA\Property(
+ *          property="longitude",
+ *          type="number",
+ *          format="float",
+ *          description="Долгота",
+ *          example=55.751244
+ *      ),
+ *      @OA\Property(
+ *          property="latitude",
+ *          type="number",
+ *          format="float",
+ *          description="Широта",
+ *          example=37.618423
+ *      )
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="BuildingUpdate",
+ *      type="object",
+ *      title="Building Update",
+ *      description="Данные для обновления здания",
+ *      @OA\Property(
+ *          property="description",
+ *          type="string",
+ *          description="Описание здания",
+ *          example="Обновленное описание здания"
+ *      ),
+ *      @OA\Property(
+ *          property="address",
+ *          type="string",
+ *          description="Адрес здания",
+ *          example="ул. Обновленная, д. 456"
+ *      ),
+ *      @OA\Property(
+ *          property="longitude",
+ *          type="number",
+ *          format="float",
+ *          description="Долгота",
+ *          example=55.755826
+ *      ),
+ *      @OA\Property(
+ *          property="latitude",
+ *          type="number",
+ *          format="float",
+ *          description="Широта",
+ *          example=37.617300
+ *      )
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="PaginationMeta",
+ *      type="object",
+ *      @OA\Property(property="current_page", type="integer", example=1),
+ *      @OA\Property(property="from", type="integer", example=1),
+ *      @OA\Property(property="last_page", type="integer", example=10),
+ *      @OA\Property(property="path", type="string", example="http://localhost/api/buildings"),
+ *      @OA\Property(property="per_page", type="integer", example=20),
+ *      @OA\Property(property="to", type="integer", example=20),
+ *      @OA\Property(property="total", type="integer", example=200)
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="PaginationLinks",
+ *      type="object",
+ *      @OA\Property(property="first", type="string", example="http://localhost/api/buildings?page=1"),
+ *      @OA\Property(property="last", type="string", example="http://localhost/api/buildings?page=10"),
+ *      @OA\Property(property="prev", type="string", example="http://localhost/api/buildings?page=1"),
+ *      @OA\Property(property="next", type="string", example="http://localhost/api/buildings?page=2")
+ *  )
+ *
+ * @OA\Schema(
  *      schema="ValidationError",
  *      @OA\Property(property="success", type="boolean", example=false),
  *      @OA\Property(

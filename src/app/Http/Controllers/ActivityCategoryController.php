@@ -15,24 +15,26 @@ class ActivityCategoryController extends Controller
      *     path="/api/activity/category",
      *     summary="Получить список категорий",
      *     tags={"Activity Categories"},
-     *          @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(type="integer", minimum=1, default=1)
-     *      ),
-     *      @OA\Parameter(
-     *          name="per_page",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(type="integer", minimum=1, maximum=1000, default=20)
-     *      ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer", minimum=1, default=1)
+     *     ),
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer", minimum=1, maximum=1000, default=20)
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Успешно",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
      *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/ActivityCategory")),
+     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
+     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
      *         )
      *     )
      * )
@@ -59,11 +61,11 @@ class ActivityCategoryController extends Controller
      *             @OA\Property(property="data", ref="#/components/schemas/ActivityCategory"),
      *         )
      *     ),
-     *          @OA\Response(
-     *          response=422,
-     *          description="Ошибка валидации",
-     *          @OA\JsonContent(ref="#/components/schemas/ValidationError")
-     *      )
+     *     @OA\Response(
+     *         response=422,
+     *         description="Ошибка валидации",
+     *         @OA\JsonContent(ref="#/components/schemas/ValidationError")
+     *     )
      * )
      */
     public function store(ActivityCategoryRequest $request)
@@ -120,11 +122,11 @@ class ActivityCategoryController extends Controller
      *         )
      *     ),
      *     @OA\Response(response=404, description="Категория не найдена"),
-     *          @OA\Response(
-     *          response=422,
-     *          description="Ошибка валидации",
-     *          @OA\JsonContent(ref="#/components/schemas/ValidationError")
-     *      )
+     *     @OA\Response(
+     *         response=422,
+     *         description="Ошибка валидации",
+     *         @OA\JsonContent(ref="#/components/schemas/ValidationError")
+     *     )
      * )
      */
     public function update(ActivityCategoryRequest $request, ActivityCategory $activityCategories)

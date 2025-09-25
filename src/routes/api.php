@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityCategoryController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\BuildingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('activity')->name('activity.')->group(function () {
@@ -18,4 +19,12 @@ Route::prefix('activity')->name('activity.')->group(function () {
     Route::put('/', [ActivityController::class, 'update'])->name('update');
     Route::get('/{activity}', [ActivityController::class, 'show'])->name('show');
     Route::delete('/{activity}', [ActivityController::class, 'delete'])->name('delete');
+});
+
+Route::prefix('buildings')->name('buildings.')->group(function () {
+    Route::get('/', [BuildingController::class, 'index'])->name('index');
+    Route::post('/', [BuildingController::class, 'store'])->name('store');
+    Route::put('/', [BuildingController::class, 'update'])->name('update');
+    Route::get('/{building}', [BuildingController::class, 'show'])->name('show');
+    Route::delete('/{building}', [BuildingController::class, 'delete'])->name('delete');
 });

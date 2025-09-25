@@ -41,6 +41,8 @@ class ActivityController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
      *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Activity")),
+     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
+     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
      *         )
      *     )
      * )
@@ -111,7 +113,7 @@ class ActivityController extends Controller
      *         description="Не найдено",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=false),
-     *             @OA\Property(property="data", type="string", example="Activity not found")
+     *             @OA\Property(property="message", type="string", example="Activity not found")
      *         )
      *     )
      * )
