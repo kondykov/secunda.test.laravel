@@ -15,7 +15,6 @@ class Activity extends Model
     ];
 
     protected $casts = [
-        'level' => 'integer',
         'is_category' => 'boolean'
     ];
 

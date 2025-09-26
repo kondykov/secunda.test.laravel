@@ -17,8 +17,7 @@ class ActivityFactory extends Factory
             'name' => $this->faker->name(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
-            'activity_categories_id' => ActivityCategory::factory(),
+            'is_category' => $this->faker->boolean(),
         ];
     }
 }
