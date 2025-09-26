@@ -1270,6 +1270,49 @@
                     }
                 }
             }
+        },
+        "/api/organizations/search-location": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Организации в радиусе от точки",
+                "operationId": "44cd549194d294fad0bbc4461045006a",
+                "parameters": [
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 55.7558
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 37.6173
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1000
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                }
+            }
         }
     },
     "components": {

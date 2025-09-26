@@ -26,6 +26,7 @@ Route::prefix('organizations')->name('organizations.')->group(function () {
 
     Route::get('/', [OrganizationController::class, 'index'])->name('index');
     Route::get('/search', [OrganizationController::class, 'search'])->name('search');
+    Route::get('/search-location', [OrganizationController::class, 'searchByLocation'])->name('search-by-location');
     Route::post('/', [OrganizationController::class, 'store'])->name('store');
     Route::put('/{organization}', [OrganizationController::class, 'update'])->name('update');
     Route::get('/{organization}', [OrganizationController::class, 'show'])->name('show');

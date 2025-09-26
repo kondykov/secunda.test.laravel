@@ -8,6 +8,7 @@ use App\Models\Organization;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrganizationController extends Controller
 {
@@ -132,6 +133,56 @@ class OrganizationController extends Controller
     {
         $data = $request->validate(['name' => 'required|string|exists:organizations,name']);
         return ApiResponse::success(OrganizationResource::make(Organization::whereName($data['name'])->first()));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/organizations/search-location",
+     *     summary="Организации в радиусе от точки",
+     *     tags={"Organizations"},
+     *     @OA\Parameter(
+     *         name="lat",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(type="number", example=55.7558)
+     *     ),
+     *     @OA\Parameter(
+     *         name="lng",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(type="number", example=37.6173)
+     *     ),
+     *     @OA\Parameter(
+     *         name="radius",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer", example=1000)
+     *     ),
+     *     @OA\Response(response=200, description="Успешно")
+     * )
+     */
+    public function searchByLocation(Request $request)
+    {
+        $request->validate([
+            'lat' => 'required|numeric|min:-90|max:90',
+            'lng' => 'required|numeric|min:-180|max:180',
+            'radius' => 'sometimes|integer|min:100'
+        ]);
+
+        $organizations = Organization::with('building')
+            ->whereHas('building', function ($query) use ($request) {
+                $query->whereRaw(
+                    "ST_Distance_Sphere(POINT(longitude, latitude), POINT(?, ?)) <= ?",
+                    [$request->lng, $request->lat, $request->radius ?? 1000]
+                );
+            })
+            ->get();
+
+        if ($organizations->isEmpty()) {
+            throw new NotFoundHttpException('Organizations not found');
+        }
+
+        return ApiResponse::success(OrganizationResource::collection($organizations));
     }
 
     /**
