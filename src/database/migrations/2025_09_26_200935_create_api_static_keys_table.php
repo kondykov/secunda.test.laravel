@@ -7,17 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('api_static_keys', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->json('phones');
-            $table->foreignId('building_id')->constrained('buildings');
+            $table->string('name')->nullable();
+            $table->string('key');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('api_static_keys');
     }
 };

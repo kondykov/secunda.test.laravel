@@ -2,24 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\Building;
-use App\Models\Organization;
+use App\Models\ApiStaticKey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class OrganizationFactory extends Factory
+class ApiStaticKeyFactory extends Factory
 {
-    protected $model = Organization::class;
+    protected $model = ApiStaticKey::class;
 
     public function definition(): array
     {
         return [
             'name' => $this->faker->name(),
-            'phones' => $this->faker->words(),
+            'key' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
-            'building_id' => Building::factory(),
         ];
     }
 }

@@ -236,6 +236,34 @@ use OpenApi\Annotations as OA;
  *  )
  *
  * @OA\Schema(
+ *      schema="ApiStaticKey",
+ *      type="object",
+ *      description="Статический API ключ",
+ *      @OA\Property(property="id", type="integer", example=1),
+ *      @OA\Property(property="name", type="string", example="Мобильное приложение"),
+ *      @OA\Property(property="key", type="string", example="sk_live_1234567890abcdef"),
+ *      @OA\Property(property="created_at", type="string", format="date-time"),
+ *      @OA\Property(property="updated_at", type="string", format="date-time")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="ApiStaticKeyCreate",
+ *      type="object",
+ *      required={"name", "key"},
+ *      description="Данные для создания API ключа",
+ *      @OA\Property(property="name", type="string", maxLength=255, example="Мобильное приложение"),
+ *      @OA\Property(property="key", type="string", maxLength=255, example="sk_live_1234567890abcdef")
+ *  )
+ *
+ * @OA\Schema(
+ *      schema="ApiStaticKeyUpdate",
+ *      type="object",
+ *      description="Данные для обновления API ключа",
+ *      @OA\Property(property="name", type="string", maxLength=255, example="Обновленное название"),
+ *      @OA\Property(property="key", type="string", maxLength=255, example="sk_live_updated_key")
+ *  )
+ *
+ * @OA\Schema(
  *      schema="ValidationError",
  *      @OA\Property(property="success", type="boolean", example=false),
  *      @OA\Property(

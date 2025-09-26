@@ -383,6 +383,310 @@
                 }
             }
         },
+        "/api/identity": {
+            "get": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Получить список всех статических API ключей",
+                "operationId": "d4e4e2f10392317e15d6f3390420bc76",
+                "responses": {
+                    "200": {
+                        "description": "Список API ключей успешно получен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ApiStaticKey"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "apiKeyAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Создать новый статический API ключ",
+                "operationId": "a668cf27de9ffe3e9b5a5387dcf97686",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApiStaticKeyCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "API ключ успешно создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ApiStaticKey"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "apiKeyAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/identity/{key}": {
+            "get": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Получить статический API ключ по ID",
+                "operationId": "22d97af6d8f129c94fc256a2736d7bae",
+                "parameters": [
+                    {
+                        "name": "apiStaticKey",
+                        "in": "path",
+                        "description": "ID API ключа",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "API ключ успешно получен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ApiStaticKey"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "API ключ не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Api static key not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "apiKeyAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Обновить статический API ключ",
+                "operationId": "adffc278fc848c5ac30d9315e6233cc4",
+                "parameters": [
+                    {
+                        "name": "apiStaticKey",
+                        "in": "path",
+                        "description": "ID API ключа",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApiStaticKeyUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "API ключ успешно обновлен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/ApiStaticKey"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "API ключ не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Api static key not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "apiKeyAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Identity"
+                ],
+                "summary": "Удалить статический API ключ",
+                "operationId": "322b3ecd14b7689944e690d7efeb7475",
+                "parameters": [
+                    {
+                        "name": "apiStaticKey",
+                        "in": "path",
+                        "description": "ID API ключа",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "API ключ успешно удален"
+                    },
+                    "404": {
+                        "description": "API ключ не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Api static key not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "apiKeyAuth": []
+                    }
+                ]
+            }
+        },
         "/api/buildings": {
             "get": {
                 "tags": [
@@ -1664,6 +1968,68 @@
                 },
                 "type": "object"
             },
+            "ApiStaticKey": {
+                "description": "Статический API ключ",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Мобильное приложение"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "sk_live_1234567890abcdef"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiStaticKeyCreate": {
+                "description": "Данные для создания API ключа",
+                "required": [
+                    "name",
+                    "key"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Мобильное приложение"
+                    },
+                    "key": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "sk_live_1234567890abcdef"
+                    }
+                },
+                "type": "object"
+            },
+            "ApiStaticKeyUpdate": {
+                "description": "Данные для обновления API ключа",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Обновленное название"
+                    },
+                    "key": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "sk_live_updated_key"
+                    }
+                },
+                "type": "object"
+            },
             "ValidationError": {
                 "properties": {
                     "success": {
@@ -1696,6 +2062,10 @@
         {
             "name": "Activities",
             "description": "Activities"
+        },
+        {
+            "name": "Identity",
+            "description": "Identity"
         },
         {
             "name": "Buildings",
