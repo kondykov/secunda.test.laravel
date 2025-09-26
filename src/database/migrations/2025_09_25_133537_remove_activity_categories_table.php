@@ -17,7 +17,6 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->boolean('is_category')->default(true);
 
-            $table->index(['parent_id', 'level']);
             $table->index('is_category');
         });
 
