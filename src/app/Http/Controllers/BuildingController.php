@@ -33,9 +33,7 @@ class BuildingController extends Controller
      *         description="Успешно",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Building")),
-     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
-     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Building"))
      *         )
      *     )
      * )
@@ -195,9 +193,7 @@ class BuildingController extends Controller
      *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-25T15:44:53.000000Z"),
      *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-25T15:44:54.000000Z")
      *                 )
-     *             ),
-     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
-     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
+     *             )
      *         )
      *     ),
      *     @OA\Response(

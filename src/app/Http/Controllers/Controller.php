@@ -19,43 +19,26 @@ use OpenApi\Annotations as OA;
  *     schema="Activity",
  *     type="object",
  *     @OA\Property(property="id", type="integer", example=1),
- *     @OA\Property(property="name", type="string", example="Утренняя пробежка"),
- *     @OA\Property(property="activity_category_id", type="integer", example=1),
- *     @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-15T10:30:00Z"),
- *     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-15T10:30:00Z")
- * )
- *
- * @OA\Schema(
- *     schema="ActivityCategory",
- *     type="object",
- *     @OA\Property(property="id", type="integer", example=1),
- *     @OA\Property(property="name", type="string", example="Спорт"),
+ *     @OA\Property(property="name", type="string", example="Автомобили"),
+ *     @OA\Property(property="parent_id", type="integer", example=1),
+ *     @OA\Property(property="is_category", type="boolena", example=true),
  *     @OA\Property(property="created_at", type="string", format="date-time", example="2024-01-15T10:30:00Z"),
  *     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-01-15T10:30:00Z")
  * )
  *
  * @OA\Schema(
  *     schema="ActivityCreate",
- *     required={"name", "activity_category_id"},
- *     @OA\Property(property="name", type="string", maxLength=255, example="Утренняя пробежка"),
- *     @OA\Property(property="activity_category_id", type="integer", example=1)
+ *     required={"name"},
+ *     @OA\Property(property="name", type="string", maxLength=255, example="Автомобили"),
+ *     @OA\Property(property="parent_id", type="integer", example=1),
+ *     @OA\Property(property="is_category", type="boolean", example=true)
  * )
  *
  * @OA\Schema(
  *     schema="ActivityUpdate",
- *     @OA\Property(property="name", type="string", maxLength=255, example="Вечерняя пробежка"),
- *     @OA\Property(property="activity_category_id", type="integer", example=2)
- * )
- *
- * @OA\Schema(
- *     schema="CategoryCreate",
- *     required={"name"},
- *     @OA\Property(property="name", type="string", maxLength=255, example="Спорт")
- * )
- *
- * @OA\Schema(
- *     schema="CategoryUpdate",
- *     @OA\Property(property="name", type="string", maxLength=255, example="Фитнес")
+ *     @OA\Property(property="name", type="string", maxLength=255, example="Еда"),
+ *     @OA\Property(property="parent_id", type="integer", example=2),
+ *     @OA\Property(property="is_category", type="boolean", example=false),
  * )
  *
  * @OA\Schema(

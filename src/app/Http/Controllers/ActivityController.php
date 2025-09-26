@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActivityRequest;
 use App\Http\Resources\ActivityResource;
+use App\Interfaces\ActivityServiceInterface;
 use App\Models\Activity;
-use App\Models\ActivityCategory;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 class ActivityController extends Controller
 {
+
+    public function __construct(
+        private ActivityServiceInterface $activityService,
+    )
+    {
+    }
+
     /**
      * @OA\Get(
      *     path="/api/activity",
@@ -30,34 +37,52 @@ class ActivityController extends Controller
      *         @OA\Schema(type="integer", minimum=1, maximum=1000, default=20)
      *     ),
      *     @OA\Parameter(
-     *         name="activity_category_id",
+     *         name="parent_id",
      *         in="query",
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
+     *     @OA\Parameter(
+     *          name="level",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="root_only",
+     *          in="query",
+     *          required=false,
+     *          @OA\Schema(type="boolean")
+     *      ),
      *     @OA\Response(
      *         response=200,
      *         description="Успешно",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Activity")),
-     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
-     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Activity"))
      *         )
      *     )
      * )
      */
     public function index(Request $request)
     {
-        $categoryId = $request->input('activity_category_id') ?? null;
+        $query = Activity::with('parent');
 
-        if ($categoryId) {
-            $activities = Activity::where('activity_category_id', $categoryId)->paginate();
-        } else {
-            $activities = Activity::paginate();
+        if ($request->has('type')) {
+            if ($request->type === 'categories') {
+                $query->categories();
+            } elseif ($request->type === 'activities') {
+                $query->activities();
+            }
         }
 
-        return ApiResponse::success(ActivityResource::collection($activities));
+        if ($request->has('parent_id')) {
+            $query->where('parent_id', $request->parent_id);
+        } elseif ($request->boolean('roots_only')) {
+            $query->rootCategories();
+        }
+
+        return ApiResponse::success(ActivityResource::collection($query->paginate()));
     }
 
     /**
@@ -124,17 +149,66 @@ class ActivityController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/activity/{activity}/organizations",
+     *     summary="Получить огранизации по ID вида деятельности",
+     *     tags={"Activities"},
+     *     @OA\Parameter(
+     *         name="activity",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Успешно",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="success", type="boolean", example=true),
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="organizations_ids",
+     *                      type="array",
+     *                      @OA\Items(type="integer", example=1)
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Не найдено",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Organizations not found")
+     *         )
+     *     )
+     * )
+     */
+    public function getOrganizations(Activity $activity)
+    {
+        return ApiResponse::success([
+            'organizations_ids' => $this->activityService->getOrganizations($activity),
+        ]);
+    }
+    /**
      * @OA\Put(
-     *     path="/api/activity",
+     *     path="/api/activity/{activity}",
      *     summary="Обновить вид деятельности",
      *     tags={"Activities"},
+     *     @OA\Parameter(
+     *          name="activity",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *      ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"id"},
-     *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="name", type="string", example="Новое название"),
-     *             @OA\Property(property="activity_category_id", type="integer", example=2)
+     *             @OA\Property(property="parent_id", type="integer", example=2),
+     *             @OA\Property(property="is_category", type="boolean", example=false)
      *         )
      *     ),
      *     @OA\Response(

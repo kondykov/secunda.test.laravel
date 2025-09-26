@@ -6,6 +6,7 @@ use App\Http\Requests\OrganizationRequest;
 use App\Http\Resources\OrganizationResource;
 use App\Models\Organization;
 use App\Utils\ApiResponse;
+use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 class OrganizationController extends Controller
@@ -32,9 +33,7 @@ class OrganizationController extends Controller
      *         description="Успешно",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Organization")),
-     *             @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
-     *             @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Organization"))
      *         )
      *     )
      * )
@@ -102,6 +101,37 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
         return ApiResponse::success(new OrganizationResource($organization));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/organizations/search",
+     *     summary="Найти организацию по имени",
+     *     tags={"Organizations"},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Успешно",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="data", ref="#/components/schemas/Organization")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Организация не найдена"
+     *     )
+     * )
+     */
+    public function search(Request $request)
+    {
+        $data = $request->validate(['name' => 'required|string|exists:organizations,name']);
+        return ApiResponse::success(OrganizationResource::make(Organization::whereName($data['name'])->first()));
     }
 
     /**

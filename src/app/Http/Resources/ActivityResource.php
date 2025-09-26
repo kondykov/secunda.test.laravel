@@ -11,15 +11,20 @@ class ActivityResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $includeChildren = $request->get('include_children', false);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'parent_id' => $this->parent()->first()?->id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
-            'activity_category_id' => $this->activity_category_id,
+            'children' => $this->when($includeChildren && $this->is_category,
+                ActivityResource::collection($this->children)
+            ),
 
-            'activityCategories' => new ActivityCategoriesResource($this->whenLoaded('activityCategories')),
+            'parent' => new ActivityResource($this->whenLoaded('parent')),
         ];
     }
 }
