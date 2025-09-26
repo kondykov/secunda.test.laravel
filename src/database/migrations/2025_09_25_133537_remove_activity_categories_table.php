@@ -17,12 +17,13 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->boolean('is_category')->default(true);
 
+            $table->index(['parent_id']);
             $table->index('is_category');
         });
 
         DB::statement("
-            INSERT INTO activities (name, is_category, level, created_at, updated_at)
-            SELECT name, true, 0, NOW(), NOW() FROM activity_categories
+            INSERT INTO activities (name, is_category, created_at, updated_at)
+            SELECT name, true, NOW(), NOW() FROM activity_categories
         ");
 
         Schema::dropIfExists('activity_categories');
