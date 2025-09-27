@@ -75,14 +75,14 @@ use OpenApi\Annotations as OA;
  *          type="number",
  *          format="float",
  *          description="Долгота",
- *          example=55.751244
+ *          example=37.618423
  *      ),
  *      @OA\Property(
  *          property="latitude",
  *          type="number",
  *          format="float",
  *          description="Широта",
- *          example=37.618423
+ *          example=55.751244
  *      ),
  *      @OA\Property(
  *          property="created_at",
@@ -121,14 +121,14 @@ use OpenApi\Annotations as OA;
  *          type="number",
  *          format="float",
  *          description="Долгота",
- *          example=55.751244
+ *          example=37.618423
  *      ),
  *      @OA\Property(
  *          property="latitude",
  *          type="number",
  *          format="float",
  *          description="Широта",
- *          example=37.618423
+ *          example=55.751244
  *      )
  *  )
  *

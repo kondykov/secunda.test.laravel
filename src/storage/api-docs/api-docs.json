@@ -1772,13 +1772,13 @@
                         "description": "Долгота",
                         "type": "number",
                         "format": "float",
-                        "example": 55.751244
+                        "example": 37.618423
                     },
                     "latitude": {
                         "description": "Широта",
                         "type": "number",
                         "format": "float",
-                        "example": 37.618423
+                        "example": 55.751244
                     },
                     "created_at": {
                         "description": "Дата создания",
@@ -1817,13 +1817,13 @@
                         "description": "Долгота",
                         "type": "number",
                         "format": "float",
-                        "example": 55.751244
+                        "example": 37.618423
                     },
                     "latitude": {
                         "description": "Широта",
                         "type": "number",
                         "format": "float",
-                        "example": 37.618423
+                        "example": 55.751244
                     }
                 },
                 "type": "object"
@@ -1846,13 +1846,13 @@
                         "description": "Долгота",
                         "type": "number",
                         "format": "float",
-                        "example": 55.755826
+                        "example": 37.6173
                     },
                     "latitude": {
                         "description": "Широта",
                         "type": "number",
                         "format": "float",
-                        "example": 37.6173
+                        "example": 55.755826
                     }
                 },
                 "type": "object"
