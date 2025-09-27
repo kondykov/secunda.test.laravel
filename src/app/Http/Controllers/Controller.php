@@ -13,6 +13,10 @@ use OpenApi\Annotations as OA;
  *     description="Постоянный API ключ для доступа к API"
  * )
  *
+ * @OA\OpenApi(
+ *      security={{"apiKeyAuth":{}}}
+ *  )
+ *
  * // SCHEMAS
  *
  * @OA\Schema(

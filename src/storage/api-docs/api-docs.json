@@ -640,7 +640,7 @@
                     "Identity"
                 ],
                 "summary": "Удалить статический API ключ",
-                "operationId": "322b3ecd14b7689944e690d7efeb7475",
+                "operationId": "89fb6d8dd3dc309c20a69fba89d43f26",
                 "parameters": [
                     {
                         "name": "apiStaticKey",
@@ -2058,6 +2058,11 @@
             }
         }
     },
+    "security": [
+        {
+            "apiKeyAuth": []
+        }
+    ],
     "tags": [
         {
             "name": "Activities",
