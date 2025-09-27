@@ -9,11 +9,11 @@ use App\Http\Middleware\StaticApiKeyAuthenticationMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('identity')->group(function () {
-    Route::get('/', [OrganizationActivityController::class, 'index'])->name('index');
-    Route::post('/', [OrganizationActivityController::class, 'store'])->name('store');
-    Route::put('/{key}', [OrganizationActivityController::class, 'update'])->name('update');
-    Route::get('/{key}', [OrganizationActivityController::class, 'show'])->name('show');
-    Route::delete('/{key}', [OrganizationActivityController::class, 'delete'])->name('delete');
+    Route::get('/', [ApiStaticKeyController::class, 'index'])->name('index');
+    Route::post('/', [ApiStaticKeyController::class, 'store'])->name('store');
+    Route::put('/{key}', [ApiStaticKeyController::class, 'update'])->name('update');
+    Route::get('/{key}', [ApiStaticKeyController::class, 'show'])->name('show');
+    Route::delete('/{key}', [ApiStaticKeyController::class, 'delete'])->name('delete');
 });
 
 Route::middleware(StaticApiKeyAuthenticationMiddleware::class)->group(function () {

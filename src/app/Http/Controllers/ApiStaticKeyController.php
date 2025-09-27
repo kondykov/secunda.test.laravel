@@ -195,7 +195,7 @@ class ApiStaticKeyController extends Controller
      *     )
      * )
      */
-    public function destroy(ApiStaticKey $apiStaticKey)
+    public function delete(ApiStaticKey $apiStaticKey)
     {
         $apiStaticKey->delete();
 
