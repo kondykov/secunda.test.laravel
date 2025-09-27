@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganizationRequest;
 use App\Http\Resources\OrganizationResource;
-use App\Models\Building;
 use App\Models\Organization;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -175,13 +173,82 @@ class OrganizationController extends Controller
             ->whereHas('building', function ($query) use ($request) {
                 $query->whereRaw(
                     "ST_Distance_Sphere(POINT(latitude, longitude), POINT(?, ?)) <= ?",
-                    [$request->lng, $request->lat, $request->radius ?? 1000]
+                    [$request->lat, $request->lng, $request->radius ?? 1000]
                 );
             })
             ->get();
 
         if ($organizations->isEmpty()) {
             throw new NotFoundHttpException('Organizations not found');
+        }
+
+        return ApiResponse::success(OrganizationResource::collection($organizations));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/organizations/search-bounds",
+     *     summary="Организации в прямоугольной области",
+     *     tags={"Organizations"},
+     *     @OA\Parameter(
+     *         name="north",
+     *         in="query",
+     *         required=true,
+     *         description="Северная граница (широта)",
+     *         @OA\Schema(type="number", example=56.851062)
+     *     ),
+     *     @OA\Parameter(
+     *         name="south",
+     *         in="query",
+     *         required=true,
+     *         description="Южная граница (широта)",
+     *         @OA\Schema(type="number", example=56.840367)
+     *     ),
+     *     @OA\Parameter(
+     *         name="east",
+     *         in="query",
+     *         required=true,
+     *         description="Восточная граница (долгота)",
+     *         @OA\Schema(type="number", example=35.914004)
+     *     ),
+     *     @OA\Parameter(
+     *         name="west",
+     *         in="query",
+     *         required=true,
+     *         description="Западная граница (долгота)",
+     *         @OA\Schema(type="number", example=35.905682)
+     *     ),
+     *     @OA\Response(response=200, description="Успешно"),
+     *     @OA\Response(response=422, description="Ошибка валидации")
+     * )
+     */
+    public function searchByBounds(Request $request)
+    {
+        $request->validate([
+            'north' => 'required|numeric|min:-90|max:90',
+            'south' => 'required|numeric|min:-90|max:90',
+            'east' => 'required|numeric|min:-180|max:180',
+            'west' => 'required|numeric|min:-180|max:180'
+        ]);
+
+        // Валидация: север должен быть больше юга, восток - больше запада
+        if ($request->south >= $request->north) {
+            return ApiResponse::error('South latitude must be less than north latitude', 422);
+        }
+
+        if ($request->west >= $request->east) {
+            return ApiResponse::error('West longitude must be less than east longitude', 422);
+        }
+
+        $organizations = Organization::with('building')
+            ->whereHas('building', function ($query) use ($request) {
+                $query->whereBetween('latitude', [$request->south, $request->north])
+                    ->whereBetween('longitude', [$request->west, $request->east]);
+            })
+            ->get();
+
+        if ($organizations->isEmpty()) {
+            return ApiResponse::error('Organizations not found within specified bounds', 404);
         }
 
         return ApiResponse::success(OrganizationResource::collection($organizations));

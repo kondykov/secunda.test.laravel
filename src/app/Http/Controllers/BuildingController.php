@@ -7,7 +7,6 @@ use App\Http\Resources\BuildingResource;
 use App\Http\Resources\OrganizationResource;
 use App\Models\Building;
 use App\Utils\ApiResponse;
-use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
 class BuildingController extends Controller

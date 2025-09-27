@@ -184,7 +184,7 @@ use OpenApi\Annotations as OA;
  *      schema="OrganizationCreate",
  *      type="object",
  *      required={"name", "phones", "building_id"},
- *      @OA\Property(property="name", type="string", example="Новая организация")
+ *      @OA\Property(property="name", type="string", example="Новая организация"),
  *      @OA\Property(
  *           property="phones",
  *           type="array",

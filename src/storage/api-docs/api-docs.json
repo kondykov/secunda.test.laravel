@@ -43,14 +43,6 @@
                         }
                     },
                     {
-                        "name": "level",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
                         "name": "root_only",
                         "in": "query",
                         "required": false,
@@ -1617,6 +1609,65 @@
                     }
                 }
             }
+        },
+        "/api/organizations/search-bounds": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "Организации в прямоугольной области",
+                "operationId": "19e644ddab03e5b7ac28f1e57a97ca62",
+                "parameters": [
+                    {
+                        "name": "north",
+                        "in": "query",
+                        "description": "Северная граница (широта)",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 56.851062
+                        }
+                    },
+                    {
+                        "name": "south",
+                        "in": "query",
+                        "description": "Южная граница (широта)",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 56.840367
+                        }
+                    },
+                    {
+                        "name": "east",
+                        "in": "query",
+                        "description": "Восточная граница (долгота)",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 35.914004
+                        }
+                    },
+                    {
+                        "name": "west",
+                        "in": "query",
+                        "description": "Западная граница (долгота)",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "example": 35.905682
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1840,12 +1891,25 @@
             },
             "OrganizationCreate": {
                 "required": [
-                    "name"
+                    "name",
+                    "phones",
+                    "building_id"
                 ],
                 "properties": {
                     "name": {
                         "type": "string",
                         "example": "Новая организация"
+                    },
+                    "phones": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "8012421412"
+                        }
+                    },
+                    "building_id": {
+                        "type": "integer",
+                        "example": 1
                     }
                 },
                 "type": "object"
