@@ -17,7 +17,7 @@ class StaticApiKeyAuthenticationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = $request->header('authorization');
+        $token = $request->header('X-API-Key');
 
         if (empty($token)) {
             return ApiResponse::error('Unauthorized', status: 401);
