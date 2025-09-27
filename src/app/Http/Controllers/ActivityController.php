@@ -42,12 +42,6 @@ class ActivityController extends Controller
      *         required=false,
      *         @OA\Schema(type="integer")
      *     ),
-     *     @OA\Parameter(
-     *          name="level",
-     *          in="query",
-     *          required=false,
-     *          @OA\Schema(type="integer")
-     *      ),
      *      @OA\Parameter(
      *          name="root_only",
      *          in="query",

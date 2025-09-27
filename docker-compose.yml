@@ -23,12 +23,6 @@ services:
       - db
     networks:
       - app-network
-    environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=db
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
     container_name: secunda.test.app
 
   db:

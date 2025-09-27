@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganizationRequest;
 use App\Http\Resources\OrganizationResource;
+use App\Models\Building;
 use App\Models\Organization;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -172,7 +174,7 @@ class OrganizationController extends Controller
         $organizations = Organization::with('building')
             ->whereHas('building', function ($query) use ($request) {
                 $query->whereRaw(
-                    "ST_Distance_Sphere(POINT(longitude, latitude), POINT(?, ?)) <= ?",
+                    "ST_Distance_Sphere(POINT(latitude, longitude), POINT(?, ?)) <= ?",
                     [$request->lng, $request->lat, $request->radius ?? 1000]
                 );
             })
