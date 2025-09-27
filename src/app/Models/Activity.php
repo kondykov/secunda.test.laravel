@@ -48,7 +48,11 @@ class Activity extends Model
         /** @var Activity $activity */
         static::creating(function ($activity) {
             if ($activity->parent_id) {
-                if ($activity->parent()?->parent()?->id) {
+                if (!$activity->relationLoaded('parent')) {
+                    $activity->load('parent');
+                }
+
+                if ($activity->parent && $activity->parent->parent_id) {
                     throw new \Exception('Достигнут максимальный уровень вложенности');
                 }
 
