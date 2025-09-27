@@ -154,14 +154,14 @@ use OpenApi\Annotations as OA;
  *          type="number",
  *          format="float",
  *          description="Долгота",
- *          example=55.755826
+ *          example=37.617300
  *      ),
  *      @OA\Property(
  *          property="latitude",
  *          type="number",
  *          format="float",
  *          description="Широта",
- *          example=37.617300
+ *          example=55.755826
  *      )
  *  )
  *
