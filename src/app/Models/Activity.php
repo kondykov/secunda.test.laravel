@@ -52,8 +52,13 @@ class Activity extends Model
                     $activity->load('parent');
                 }
 
-                if ($activity->parent && $activity->parent->parent_id) {
-                    throw new \Exception('Достигнут максимальный уровень вложенности');
+                if ($activity->parent) {
+                    if ($activity->parent->parent_id){
+                        $activity->parent->load('parent');
+                        if ($activity->parent->parent->parent_id){
+                            throw new \Exception('Достигнут максимальный уровень вложенности');
+                        }
+                    }
                 }
 
                 if (!$activity->is_category) {

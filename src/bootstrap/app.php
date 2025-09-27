@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -42,23 +43,28 @@ return Application::configure(basePath: dirname(__DIR__))
             return null;
         });
 
-//        $exceptions->render(function (Exception $e, Request $request) use ($isApiRequest) {
-//            if ($isApiRequest($request)) {
-//                $isDebug = config('app.debug');
-//
-//                if ($isDebug) {
-//                    return ApiResponse::error([
-//                        'message' => $e->getMessage(),
-//                        'code' => $e->getCode(),
-//                        'file' => $e->getFile(),
-//                        'line' => $e->getLine(),
-//                        'trace' => $e->getTrace(),
-//                    ], status: 500);
-//                }
-//
-//                return ApiResponse::error('Internal Server Error', status: 500);
-//            }
-//
-//            return null;
-//        });
+        $exceptions->render(function (Exception $e, Request $request) use ($isApiRequest) {
+            if ($isApiRequest($request)) {
+                $isDebug = config('app.debug');
+
+                if ($isDebug) {
+                    return ApiResponse::error([
+                        'message' => $e->getMessage(),
+                        'code' => $e->getCode(),
+                        'file' => $e->getFile(),
+                        'line' => $e->getLine(),
+                        'trace' => $e->getTrace(),
+                    ], status: 500);
+                }
+
+                $code = $e->getCode();
+                if ($e->getCode() == 0) {
+                    $code = 500;
+                }
+
+                return ApiResponse::error($e->getMessage(), status: $code);
+            }
+
+            return null;
+        });
     })->create();
